@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Fusion Regex Tagger</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="theme-default">
+  <div class="container">
+    <div class="header">
+      <div class="logo">Fusion Regex Tagger</div>
+      <i class="fas fa-bars hamburger" id="hamburger"></i>
+      <div class="theme-menu" id="theme-menu">
+        <button data-theme="theme-default">Dark Mode</button>
+        <button data-theme="theme-dark">Pure Black Mode</button>
+        <button data-theme="theme-retro">Retro Theme</button>
+        <button data-theme="theme-light">Light Mode</button>
+      </div>
+    </div>
+    <form method="POST" enctype="multipart/form-data">
+      <div class="card form-card">
+        <div class="preview-header">
+          <div class="section-title">Upload Filters & Filenames</div>
+        </div>
+        <div class="content-container">
+          <!-- Filters dropzone -->
+          <div id="filters-zone" class="dropzone">
+            <i class="fas fa-file-code fa-2x"></i><br>
+            <span id="filters-text">{{ filters_filename or 'Drag & drop filters.json here or click to select' }}</span>
+            <input type="file" name="filters" id="filters-input" accept="application/json">
+            <textarea name="filters_data" id="filters-data" hidden>{{ filters_data_raw }}</textarea>
+            <input type="hidden" id="filters-filename-hidden" value="{{ filters_filename or '' }}">
+          </div>
+          <!-- Available tags preview -->
+          <div id="available-tags-preview" style="margin-top:20px; display:{{ 'block' if filters_data_raw else 'none' }};">
+            <div class="section-title" style="margin-bottom:10px;">Available Tags</div>
+            <div id="available-tags" class="filter-row"></div>
+          </div>
+          <!-- Filenames dropzone -->
+          <div id="files-zone" class="dropzone" style="margin-top:20px;">
+            <i class="fas fa-file-alt fa-2x"></i><br>
+            <span id="files-text">{{ filenames_file_name or 'Drag & drop filenames.txt here or click to select' }}</span>
+            <input type="file" name="filenames_file" id="files-input" accept=".txt">
+          </div>
+          <!-- Auto-resizing textarea for filenames -->
+          <textarea name="filenames_text" id="filenames-textarea" placeholder="Or paste filenames here (one per line)…">{{ filenames_text }}</textarea>
+          <div style="text-align:right; margin-top:15px;">
+            <button type="submit"><i class="fas fa-tags"></i> Tag Files</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    {% if results_list %}
+      {% for item in results_list %}
+      <div class="card">
+        <div class="preview-header">
+          <div class="section-title file-name">{{ item.name }}</div>
+        </div>
+        <div class="content-container">
+          <div class="filter-row">
+            {% if item.tags %}
+              {% for tag in item.tags %}
+              <div class="filter-tag" style="background-color: {{ tag.tagColor }}; color: {{ tag.textColor }};" title="{{ tag.name }}">
+                {% if tag.imageURL %}<img class="filter-icon" src="{{ tag.imageURL }}">{% else %}{{ tag.name }}{% endif %}
+              </div>
+              {% endfor %}
+            {% else %}
+              <span style="opacity:0.6;">No tags</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
