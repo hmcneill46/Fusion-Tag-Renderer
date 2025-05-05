@@ -246,3 +246,25 @@ button {
 button:hover {
     opacity: 0.9;
 }
+
+/* error banner container (pushes content down) */
+.alerts-container {
+    margin-bottom: 20px;
+  }
+  
+  /* base alert style */
+  .alert {
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  
+  /* error variant */
+  .alert-error {
+    background: #ff4d4f;       /* vibrant red */
+    color: #fff;
+  }
+  
+  /* you could add .alert-success, .alert-info, etc. later */
+  

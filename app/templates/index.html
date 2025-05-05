@@ -11,7 +11,17 @@
 </head>
 
 <body class="theme-default">
+  
   <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="alerts-container">
+          {% for category, msg in messages %}
+            <div class="alert alert-{{ category }}">{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
     <div class="header">
       <div class="logo">Fusion Regex Tagger</div>
       <i class="fas fa-bars hamburger" id="hamburger"></i>
