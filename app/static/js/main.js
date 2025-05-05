@@ -1,7 +1,18 @@
 // Theme menu logic
 const hamburger = document.getElementById('hamburger');
 const menu = document.getElementById('theme-menu');
-hamburger.addEventListener('click', () => menu.classList.toggle('show'));
+hamburger.addEventListener('click', e => {
+  e.stopPropagation();
+  menu.classList.toggle('show');
+});
+document.addEventListener('click', e => {
+  if (menu.classList.contains('show')) {
+    menu.classList.remove('show');
+  }
+});
+menu.addEventListener('click', e => {
+  e.stopPropagation();
+});
 document.querySelectorAll('#theme-menu button').forEach(btn => btn.addEventListener('click', () => {
   document.body.className = btn.dataset.theme;
   localStorage.setItem('theme', btn.dataset.theme);
@@ -43,8 +54,8 @@ function makeDropzone(zoneId, inputId, textId, filenameHiddenId) {
     }
   });
 }
-makeDropzone('filters-zone','filters-input','filters-text','filters-filename-hidden');
-makeDropzone('files-zone','files-input','files-text');
+makeDropzone('filters-zone', 'filters-input', 'filters-text', 'filters-filename-hidden');
+makeDropzone('files-zone', 'files-input', 'files-text');
 
 // Auto-resize textarea
 function autoResizeTextarea(id) {
@@ -66,14 +77,15 @@ function loadAndPreviewTagsFromRaw(raw, fname) {
     const data = JSON.parse(raw); const list = data.filters || [];
     const container = document.getElementById('available-tags'); container.innerHTML = '';
     list.filter(f => f.isEnabled).forEach(f => {
-      const tag = document.createElement('div'); tag.className='filter-tag';
-      tag.style.backgroundColor=f.tagColor||'#333'; tag.style.color=f.textColor||'#fff'; tag.title=f.name;
-      if(f.imageURL){const img=document.createElement('img');img.src=f.imageURL;img.className='filter-icon';img.alt=f.name;tag.appendChild(img);} else tag.textContent=f.name;
+      const tag = document.createElement('div'); tag.className = 'filter-tag';
+      tag.style.backgroundColor = f.tagColor || '#333'; tag.style.color = f.textColor || '#fff'; tag.title = f.name;
+      if (f.imageURL) { const img = document.createElement('img'); img.src = f.imageURL; img.className = 'filter-icon'; img.alt = f.name; tag.appendChild(img); } else tag.textContent = f.name;
       container.appendChild(tag);
     });
-    document.getElementById('available-tags-preview').style.display='block';
-    document.getElementById('filters-text').textContent=fname;
-  } catch(err){console.error('Invalid JSON',err);} }
+    document.getElementById('available-tags-preview').style.display = 'block';
+    document.getElementById('filters-text').textContent = fname;
+  } catch (err) { console.error('Invalid JSON', err); }
+}
 
 // Load filenames into textarea immediately
 function loadFilenames(file) {
