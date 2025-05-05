@@ -2,13 +2,10 @@
 
 A simple, intuitive web app for testing and previewing [Fusion](https://www.notion.so/Fusion-App-1d5759d6b003805890e9e51963279fd7) tag JSON files by applying regex-based tags to lists of file names, ranking them according to your tag priorities.
 
-<!-- ———————————————————————————————————————————————————————— -->
-<!-- Hero screenshots under the title & one-liner, before TOC →   -->
 <p align="center">
   <img src="https://github.com/user-attachments/assets/76aa6a1e-01ed-4a7c-96c7-b6745e4f2142" alt="Upload JSON & see tags" width="45%" style="margin-right:2%"/>
   <img src="https://github.com/user-attachments/assets/1039ac92-e400-4c9e-ac21-cfa4e7b87c45" alt="Results table & ranking" width="45%"/>
 </p>
-<!-- ———————————————————————————————————————————————————————— -->
 
 ## Table of Contents
 
